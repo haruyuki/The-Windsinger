@@ -1,7 +1,6 @@
 if (Number(process.version.slice(1).split(".")[0]) < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
 
 const Discord = require("discord.js");
-const Enmap = require("enmap");
 const fs = require("fs");
 
 const client = new Discord.Client();
@@ -20,17 +19,18 @@ fs.readdir("./events/", (err, files) => {
   });
 });
 
-client.commands = new Enmap();
-
-fs.readdir("./commands/", (err, files) => {
-  if (err) return console.error(err);
-
-  files.forEach(file => {
-    if (!file.endsWith(".js")) return;
-    const props = require(`./commands/${file}`);
-    const commandName = file.split(".")[0];
-    console.log(`Loading command ${commandName}!`);
-    client.commands.set(commandName, props);
+client.commands = new Discord.Collection();
+client.aliases = new Discord.Collection();
+fs.readdir(`./commands/`, (err, files) => {
+  if(err) console.error(err);
+  console.log(`Loading a total of ${files.length} commands.`);
+  files.forEach(f=> {
+    let props = require(`./commands/${f}`);
+    console.log(`Loading Command: ${props.help.name}. :ok_hand:`);
+    client.commands.set(props.help.name, props);
+    props.conf.aliases.forEach(alias => {
+      client.aliases.set(alias, props.help.name);
+    });
   });
 });
 

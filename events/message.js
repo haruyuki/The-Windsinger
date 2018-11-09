@@ -3,10 +3,15 @@ module.exports = (client, message) => {
 
   const args = message.content.slice(client.config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
-  const cmd = client.commands.get(command);
 
-  console.log(command);
-  console.log(cmd);
+  let cmd;
+  if (client.commands.has(command)) {
+    cmd = client.commands.get(command);
+  } else if (client.aliases.has(command)) {
+    cmd = client.commands.get(client.aliases.get(command));
+  }
+
+  console.log(`${command} command ran.`);
 
   if (!cmd) return;
   cmd.run(client, message, args);
