@@ -21,12 +21,12 @@ fs.readdir("./events/", (err, files) => {
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
-fs.readdir(`./commands/`, (err, files) => {
-  if(err) console.error(err);
+fs.readdir("./commands/", (err, files) => {
+  if (err) console.error(err);
   console.log(`Loading a total of ${files.length} commands.`);
   files.forEach(f=> {
-    let props = require(`./commands/${f}`);
-    console.log(`Loading Command: ${props.help.name}. :ok_hand:`);
+    const props = require(`./commands/${f}`);
+    console.log(`Loading command ${props.help.name}!`);
     client.commands.set(props.help.name, props);
     props.conf.aliases.forEach(alias => {
       client.aliases.set(alias, props.help.name);

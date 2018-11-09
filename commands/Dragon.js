@@ -15,13 +15,13 @@ exports.run = (client, message, args) => {
         data = data.replace(/<!--[\s\S]*?[\s\S]*?-->/gi, "");  // Remove all <!-- Comment --> tags
         const $ = cheerio.load(data);
 
-        let statsDict = [];
+        const statsDict = [];
         const stats = $("#newname fieldset div span div a span");
         let statsText = stats.text();
         statsText = statsText.match(/.{1,4}/g);
         statsText.forEach(stat => {
           const items = stat.split(/([0-9]+)/).filter(Boolean);
-          statsDict.push({key: items[0], value: items[1]})
+          statsDict.push({key: items[0], value: items[1]});
         });
         message.channel.send(statsText).catch(err => console.log(err));
       });
