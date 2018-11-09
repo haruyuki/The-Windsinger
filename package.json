@@ -24,9 +24,10 @@
   "homepage": "https://github.com/haruyuki/The-Windsinger#readme",
   "dependencies": {
     "bufferutil": "^3.0.5",
+    "cheerio": "^1.0.0-rc.2",
     "discord.js": "^11.4.2",
     "erlpack": "discordapp/erlpack",
-    "enmap": "^4.0.12"
+    "superagent": "^4.0.0-beta.5"
   },
   "devDependencies": {
     "eslint": "^5.0.0"
