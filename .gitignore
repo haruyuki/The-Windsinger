@@ -35,6 +35,7 @@ build/Release
 # The Windsinger Things
 .idea
 .DS_Store
+start.sh
 
 # Dependency directories
 node_modules/
